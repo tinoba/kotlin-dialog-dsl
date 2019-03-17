@@ -6,5 +6,5 @@
 
   <color name="color_white">#fff</color>
   <color name="color_dialog_popup_title">@color/colorPrimaryDark</color>
-  <color name="color_dialog_popup_cancel">@color/colorPrimary</color>
+  <color name="color_dialog_popup_option">@color/colorPrimary</color>
 </resources>

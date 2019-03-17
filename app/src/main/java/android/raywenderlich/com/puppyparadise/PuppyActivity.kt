@@ -88,12 +88,12 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
     adapter.setData(puppies)
   }
 
-  private fun createMessagePopupView(titleText: String,
-                                     negativeText: String,
-                                     positiveText: String,
-                                     backgroundClickAction: () -> Unit,
-                                     positiveClickAction: () -> Unit,
-                                     cancelActionClick: () -> Unit) =
+  private fun createDialogPopup(titleText: String,
+                                negativeText: String,
+                                positiveText: String,
+                                backgroundClickAction: () -> Unit,
+                                positiveClickAction: () -> Unit,
+                                negativeClickAction: () -> Unit) =
 
       dialogPopupView {
         with { this@PuppyActivity }
@@ -102,17 +102,17 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
         negativeText { negativeText }
         positiveText { positiveText }
         onPositiveClickAction { positiveClickAction }
-        onNegativeClickAction { cancelActionClick }
+        onNegativeClickAction { negativeClickAction }
         onBackgroundClickAction { backgroundClickAction }
       }
 
-  private fun showGeneralMessageDialog(position: Int) {
-    createMessagePopupView(getString(R.string.dialog_title),
+  private fun showDialogPopup(position: Int) {
+    createDialogPopup(getString(R.string.dialog_title),
         getString(R.string.dialog_negative_answer),
         getString(R.string.dialog_positive_answer),
-        { removeMessagePopup() },
+        { removeDialogPopup() },
         {
-          removeMessagePopup()
+          removeDialogPopup()
           puppies = puppies.mapIndexed { index, puppy ->
             if (index == position) {
               Puppy(true, puppy.imageResource)
@@ -122,18 +122,18 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
           }
           adapter.setData(puppies)
         },
-        { removeMessagePopup() }).let {
+        { removeDialogPopup() }).let {
       dialogPopupView = it
-      addMessagePopupViewWithBlurToRoot(it)
+      addDialogPopupViewWithBlurToRoot(it)
     }
   }
 
-  private fun addMessagePopupViewWithBlurToRoot(dialogPopupView: DialogPopupView) {
+  private fun addDialogPopupViewWithBlurToRoot(dialogPopupView: DialogPopupView) {
     rootView.addView(dialogPopupView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
     dialogPopupView.applyBlur()
   }
 
-  private fun removeMessagePopup() {
+  private fun removeDialogPopup() {
     dialogPopupView?.let {
       it.animate()
           .alpha(ALPHA_TRANSPARENT)
@@ -146,5 +146,5 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
     }
   }
 
-  override fun onItemClicked(position: Int) = showGeneralMessageDialog(position)
+  override fun onItemClicked(position: Int) = showDialogPopup(position)
 }

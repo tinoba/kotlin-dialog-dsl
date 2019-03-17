@@ -41,8 +41,8 @@ import kotlinx.android.synthetic.main.view_dialog_popup.view.*
 class DialogPopupView(context: Context?,
                       private val viewToBlur: View?,
                       private val titleText: String,
-                      private val cancelText: String,
-                      private val deleteText: String,
+                      private val negativeText: String,
+                      private val positiveText: String,
                       private val onBackgroundClickAction: () -> Unit,
                       private val onNegativeClickAction: () -> Unit,
                       private val onPositiveClickAction: () -> Unit
@@ -78,8 +78,8 @@ class DialogPopupView(context: Context?,
   private fun fillContent() {
     blurryBackground.onImageDrawableLoadedAction = this::fadeInView
     title.text = titleText
-    negativeTextView.text = cancelText
-    positiveTextView.text = deleteText
+    negativeTextView.text = negativeText
+    positiveTextView.text = positiveText
   }
 
   private fun setClickListeners() {
@@ -110,8 +110,8 @@ class DialogPopupView(context: Context?,
     var context: Context? = null
     var viewToBlur: View? = null
     var titleText: String = ""
-    var cancelText: String = ""
-    var deleteText: String = ""
+    var negativeText: String = ""
+    var positiveText: String = ""
     var onBackgroundClickAction: () -> Unit = {}
     var onNegativeClickAction: () -> Unit = {}
     var onPositiveClickAction: () -> Unit = {}
@@ -128,20 +128,20 @@ class DialogPopupView(context: Context?,
       this.titleText = title()
     }
 
-    fun negativeText(cancelText: () -> String) {
-      this.cancelText = cancelText()
+    fun negativeText(negativeText: () -> String) {
+      this.negativeText = negativeText()
     }
 
-    fun positiveText(deleteText: () -> String) {
-      this.deleteText = deleteText()
+    fun positiveText(positiveText: () -> String) {
+      this.positiveText = positiveText()
     }
 
-    fun onNegativeClickAction(onCancelClickAction: () -> () -> Unit) {
-      this.onNegativeClickAction = onCancelClickAction()
+    fun onNegativeClickAction(onNegativeClickAction: () -> () -> Unit) {
+      this.onNegativeClickAction = onNegativeClickAction()
     }
 
-    fun onPositiveClickAction(onDeleteClickAction: () -> () -> Unit) {
-      this.onPositiveClickAction = onDeleteClickAction()
+    fun onPositiveClickAction(onPositiveClickAction: () -> () -> Unit) {
+      this.onPositiveClickAction = onPositiveClickAction()
     }
 
     fun onBackgroundClickAction(onBackgroundClickAction: () -> () -> Unit) {
@@ -151,8 +151,8 @@ class DialogPopupView(context: Context?,
     fun build() = DialogPopupView(context,
         viewToBlur,
         titleText,
-        cancelText,
-        deleteText,
+        negativeText,
+        positiveText,
         onBackgroundClickAction,
         onNegativeClickAction,
         onPositiveClickAction)

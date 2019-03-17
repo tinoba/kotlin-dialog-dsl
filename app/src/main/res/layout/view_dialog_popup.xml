@@ -80,7 +80,7 @@
           android:layout_marginEnd="@dimen/view_dialog_popup_negative_option_margin_end"
           android:background="?android:attr/selectableItemBackground"
           android:padding="@dimen/view_dialog_popup_option_padding"
-          android:textColor="@color/color_dialog_popup_cancel"
+          android:textColor="@color/color_dialog_popup_option"
           android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
           tools:text="NO" />
 
@@ -91,7 +91,7 @@
           android:layout_gravity="end"
           android:background="?android:attr/selectableItemBackground"
           android:padding="@dimen/view_dialog_popup_option_padding"
-          android:textColor="@color/color_dialog_popup_cancel"
+          android:textColor="@color/color_dialog_popup_option"
           android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
           tools:text="YES" />
       </FrameLayout>

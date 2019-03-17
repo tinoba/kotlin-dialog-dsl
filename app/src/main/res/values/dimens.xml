@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="view_popup_elevation">10dp</dimen>
+  <dimen name="view_popup_horizontal_margin">24dp</dimen>
+  <dimen name="view_dialog_popup_title_textview_text_size">16sp</dimen>
+  <dimen name="view_dialog_popup_non_title_textview_text_size">14sp</dimen>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/view_dialog_popup_root_container"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.raywenderlich.com.puppyparadise.ObservableImageView
+    android:id="@+id/blurryBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true" />
+
+  <android.support.v7.widget.CardView
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/view_popup_horizontal_margin"
+    android:layout_marginRight="@dimen/view_popup_horizontal_margin"
+    android:background="@color/color_white"
+    android:visibility="invisible"
+    tools:visibility="visible">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:textColor="@color/color_dialog_popup_title"
+        android:textSize="@dimen/view_dialog_popup_title_textview_text_size"
+        tools:text="Are you sure you want to delete these notes" />
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/negativeTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:layout_marginEnd="100dp"
+          android:background="?android:attr/selectableItemBackground"
+          android:padding="19dp"
+          android:textColor="@color/color_dialog_popup_cancel"
+          android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
+          tools:text="CANCEL" />
+
+        <TextView
+          android:id="@+id/positiveTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:background="?android:attr/selectableItemBackground"
+          android:padding="19dp"
+          android:textColor="@color/color_dialog_popup_cancel"
+          android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
+          tools:text="DELETE" />
+      </FrameLayout>
+
+    </LinearLayout>
+
+  </android.support.v7.widget.CardView>
+
+</FrameLayout>

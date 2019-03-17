@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2019 Razeware LLC
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in
+  ~ all copies or substantial portions of the Software.
+  ~
+  ~ Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+  ~ distribute, sublicense, create a derivative work, and/or sell copies of the
+  ~ Software in any work that is designed, intended, or marketed for pedagogical or
+  ~ instructional purposes related to programming, coding, application development,
+  ~ or information technology.  Permission for such use, copying, modification,
+  ~ merger, publication, distribution, sublicensing, creation of derivative works,
+  ~ or sale is expressly withheld.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/view_dialog_popup_root_container"
+  android:id="@+id/dialogPopupRoot"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
@@ -35,7 +66,7 @@
         android:padding="24dp"
         android:textColor="@color/color_dialog_popup_title"
         android:textSize="@dimen/view_dialog_popup_title_textview_text_size"
-        tools:text="Are you sure you want to delete these notes" />
+        tools:text="Do you like this puppy?" />
 
       <FrameLayout
         android:layout_width="match_parent"
@@ -46,12 +77,12 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="end"
-          android:layout_marginEnd="100dp"
+          android:layout_marginEnd="@dimen/view_dialog_popup_negative_option_margin_end"
           android:background="?android:attr/selectableItemBackground"
-          android:padding="19dp"
+          android:padding="@dimen/view_dialog_popup_option_padding"
           android:textColor="@color/color_dialog_popup_cancel"
           android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
-          tools:text="CANCEL" />
+          tools:text="NO" />
 
         <TextView
           android:id="@+id/positiveTextView"
@@ -59,10 +90,10 @@
           android:layout_height="wrap_content"
           android:layout_gravity="end"
           android:background="?android:attr/selectableItemBackground"
-          android:padding="19dp"
+          android:padding="@dimen/view_dialog_popup_option_padding"
           android:textColor="@color/color_dialog_popup_cancel"
           android:textSize="@dimen/view_dialog_popup_non_title_textview_text_size"
-          tools:text="DELETE" />
+          tools:text="YES" />
       </FrameLayout>
 
     </LinearLayout>

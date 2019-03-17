@@ -5,6 +5,6 @@
   <color name="colorAccent">#D81B60</color>
 
   <color name="color_white">#fff</color>
-  <color name="color_dialog_popup_title">#969fb1</color>
-  <color name="color_dialog_popup_cancel">@color/color_dialog_popup_title</color>
+  <color name="color_dialog_popup_title">@color/colorPrimaryDark</color>
+  <color name="color_dialog_popup_cancel">@color/colorPrimary</color>
 </resources>

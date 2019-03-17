@@ -2,6 +2,11 @@
 <resources>
   <dimen name="view_popup_elevation">10dp</dimen>
   <dimen name="view_popup_horizontal_margin">24dp</dimen>
-  <dimen name="view_dialog_popup_title_textview_text_size">16sp</dimen>
-  <dimen name="view_dialog_popup_non_title_textview_text_size">14sp</dimen>
+  <dimen name="view_dialog_popup_title_textview_text_size">20sp</dimen>
+  <dimen name="view_dialog_popup_non_title_textview_text_size">18sp</dimen>
+  <dimen name="view_dialog_popup_option_padding">19dp</dimen>
+  <dimen name="view_dialog_popup_negative_option_margin_end">100dp</dimen>
+  <dimen name="heart_size">80dp</dimen>
+  <dimen name="puppy_image_height">300dp</dimen>
+  <dimen name="activity_splash_text_margin_top">24dp</dimen>
 </resources>

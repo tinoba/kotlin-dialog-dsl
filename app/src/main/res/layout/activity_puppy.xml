@@ -33,27 +33,22 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/rootView"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="match_parent"
+  tools:context=".PuppyActivity">
 
   <ImageView
-    android:id="@+id/puppyImage"
+    android:id="@+id/imageView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/puppyRecyclerView"
     android:layout_width="0dp"
-    android:layout_height="@dimen/puppy_image_height"
-    android:scaleType="fitXY"
+    android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
-
-  <ImageView
-    android:id="@+id/heartImage"
-    android:layout_width="@dimen/heart_size"
-    android:layout_height="@dimen/heart_size"
-    android:src="@drawable/heart"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="@+id/puppyImage"
-    app:layout_constraintEnd_toEndOf="parent"
-    tools:visibility="visible" />
-
 
 </android.support.constraint.ConstraintLayout>

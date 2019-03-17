@@ -30,46 +30,32 @@
 
 package android.raywenderlich.com.puppyparadise
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.view.Window
-import android.view.WindowManager
+@PuppyDslMarker class PuppyViewModelBuilder {
 
-class SplashActivity : AppCompatActivity() {
+  private val puppies = mutableListOf<Puppy>()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    makeFullScreen()
-
-    setContentView(R.layout.activity_splash)
-
-    // Using a handler to delay loading the PuppyActivity
-    Handler().postDelayed({
-
-      // Start activity
-      startActivity(Intent(this, PuppyActivity::class.java))
-
-      // Animate the loading of new activity
-      overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-      // Close this activity
-      finish()
-
-    }, 2000)
+  fun puppies(block: Puppies.() -> Unit) {
+    puppies.addAll(Puppies().apply(block))
   }
 
-  private fun makeFullScreen() {
-    // Remove Title
-    requestWindowFeature(Window.FEATURE_NO_TITLE)
+  fun build(): ArrayList<Puppy> = ArrayList(puppies)
+}
 
-    // Make Fullscreen
-    window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        WindowManager.LayoutParams.FLAG_FULLSCREEN)
+@PuppyDslMarker class Puppies : ArrayList<Puppy>() {
 
-    // Hide the toolbar
-    supportActionBar?.hide()
+  fun puppy(puppyImage: PuppyBuilder.() -> Unit) {
+    add(PuppyBuilder().apply(puppyImage).build())
   }
 }
+
+@PuppyDslMarker class PuppyBuilder {
+
+  var isLiked: Boolean = false
+  var imageResourceId: Int = 0
+
+  fun build(): Puppy = Puppy(isLiked, imageResourceId)
+}
+
+fun puppyViewModel(puppies: PuppyViewModelBuilder.() -> Unit): ArrayList<Puppy> = PuppyViewModelBuilder().apply(puppies).build()
+
+@DslMarker annotation class PuppyDslMarker

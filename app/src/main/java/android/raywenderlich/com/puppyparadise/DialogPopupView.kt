@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2019 Razeware LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+ * distribute, sublicense, create a derivative work, and/or sell copies of the
+ * Software in any work that is designed, intended, or marketed for pedagogical or
+ * instructional purposes related to programming, coding, application development,
+ * or information technology.  Permission for such use, copying, modification,
+ * merger, publication, distribution, sublicensing, creation of derivative works,
+ * or sale is expressly withheld.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package android.raywenderlich.com.puppyparadise
 
 import android.content.Context
@@ -8,7 +38,15 @@ import android.widget.FrameLayout
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.view_dialog_popup.view.*
 
-class DialogPopupView private constructor(context: Context, builder: Builder) : FrameLayout(context) {
+class DialogPopupView(context: Context?,
+                      private val viewToBlur: View?,
+                      private val titleText: String,
+                      private val cancelText: String,
+                      private val deleteText: String,
+                      private val onBackgroundClickAction: () -> Unit,
+                      private val onNegativeClickAction: () -> Unit,
+                      private val onPositiveClickAction: () -> Unit
+) : FrameLayout(context!!) {
 
   companion object {
 
@@ -22,33 +60,15 @@ class DialogPopupView private constructor(context: Context, builder: Builder) : 
 
     @LayoutRes
     private const val LAYOUT_RESOURCE = R.layout.view_dialog_popup
-
-    fun builder(context: Context): Builder = Builder(context)
   }
 
-  private var viewToBlur: View? = null
   private var blurRadius = DEFAULT_BLUR_RADIUS
   private var blurDownscaleRadius = DEFAULT_BLUR_DOWNSCALE
-  private var titleText: String = ""
-  private var cancelText: String = ""
-  private var deleteText: String = ""
-
-  private var onBackgroundClickAction: () -> Unit = {}
-  private var onNegativeClickAction: () -> Unit = {}
-  private var onPositiveClickAction: () -> Unit = {}
 
   init {
-    viewToBlur = builder.viewToBlur
-    titleText = builder.titleText
-    cancelText = builder.cancelText
-    deleteText = builder.deleteText
-    onBackgroundClickAction = builder.onBackgroundClickAction
-    onNegativeClickAction = builder.onCancelClickAction
-    onPositiveClickAction = builder.onDeleteClickAction
-
     alpha = ALPHA_TRANSPARENT
 
-    inflateLayout(context)
+    inflateLayout(context!!)
     fillContent()
     setClickListeners()
   }
@@ -76,7 +96,7 @@ class DialogPopupView private constructor(context: Context, builder: Builder) : 
   }
 
   fun applyBlur() {
-    viewToBlur?.let {
+    viewToBlur.let {
       Blurry.with(context)
           .async()
           .radius(blurRadius)
@@ -86,43 +106,55 @@ class DialogPopupView private constructor(context: Context, builder: Builder) : 
     }
   }
 
-  class Builder(val context: Context) {
-
+  @PuppyDslMarker class DialogPopupBuilder {
+    var context: Context? = null
     var viewToBlur: View? = null
-      private set
-
     var titleText: String = ""
-      private set
-
     var cancelText: String = ""
-      private set
-
     var deleteText: String = ""
-      private set
-
     var onBackgroundClickAction: () -> Unit = {}
-      private set
+    var onNegativeClickAction: () -> Unit = {}
+    var onPositiveClickAction: () -> Unit = {}
 
-    var onCancelClickAction: () -> Unit = {}
-      private set
+    fun with(context: () -> Context) {
+      this.context = context()
+    }
 
-    var onDeleteClickAction: () -> Unit = {}
-      private set
+    fun viewToBlur(viewToBlur: () -> View) {
+      this.viewToBlur = viewToBlur()
+    }
 
-    fun viewToBlur(viewToBlur: View) = apply { this.viewToBlur = viewToBlur }
+    fun titleText(title: () -> String) {
+      this.titleText = title()
+    }
 
-    fun titleText(titleText: String) = apply { this.titleText = titleText }
+    fun negativeText(cancelText: () -> String) {
+      this.cancelText = cancelText()
+    }
 
-    fun negativeText(cancelText: String) = apply { this.cancelText = cancelText }
+    fun positiveText(deleteText: () -> String) {
+      this.deleteText = deleteText()
+    }
 
-    fun positiveText(deleteText: String) = apply { this.deleteText = deleteText }
+    fun onNegativeClickAction(onCancelClickAction: () -> () -> Unit) {
+      this.onNegativeClickAction = onCancelClickAction()
+    }
 
-    fun onCancelClickAction(onCancelClickAction: () -> Unit) = apply { this.onCancelClickAction = onCancelClickAction }
+    fun onPositiveClickAction(onDeleteClickAction: () -> () -> Unit) {
+      this.onPositiveClickAction = onDeleteClickAction()
+    }
 
-    fun onPositiveClickAction(onDeleteClickAction: () -> Unit) = apply { this.onDeleteClickAction = onDeleteClickAction }
+    fun onBackgroundClickAction(onBackgroundClickAction: () -> () -> Unit) {
+      this.onBackgroundClickAction = onBackgroundClickAction()
+    }
 
-    fun onBackgroundClickAction(onBackgroundClickAction: () -> Unit) = apply { this.onBackgroundClickAction = onBackgroundClickAction }
-
-    fun build(): DialogPopupView = DialogPopupView(context, this)
+    fun build() = DialogPopupView(context,
+        viewToBlur,
+        titleText,
+        cancelText,
+        deleteText,
+        onBackgroundClickAction,
+        onNegativeClickAction,
+        onPositiveClickAction)
   }
 }

@@ -38,15 +38,7 @@ import android.widget.FrameLayout
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.view_dialog_popup.view.*
 
-class DialogPopupView(context: Context?,
-                      private val viewToBlur: View?,
-                      private val titleText: String,
-                      private val negativeText: String,
-                      private val positiveText: String,
-                      private val onBackgroundClickAction: () -> Unit,
-                      private val onNegativeClickAction: () -> Unit,
-                      private val onPositiveClickAction: () -> Unit
-) : FrameLayout(context!!) {
+class DialogPopupView private constructor(context: Context, builder: DialogPopupBuilder) : FrameLayout(context) {
 
   companion object {
 
@@ -60,15 +52,33 @@ class DialogPopupView(context: Context?,
 
     @LayoutRes
     private const val LAYOUT_RESOURCE = R.layout.view_dialog_popup
+
+    fun builder(context: Context): DialogPopupBuilder = DialogPopupBuilder(context)
   }
 
+  private var viewToBlur: View? = null
   private var blurRadius = DEFAULT_BLUR_RADIUS
   private var blurDownscaleRadius = DEFAULT_BLUR_DOWNSCALE
+  private var titleText: String = ""
+  private var negativeText: String = ""
+  private var positiveText: String = ""
+
+  private var onBackgroundClickAction: () -> Unit = {}
+  private var onNegativeClickAction: () -> Unit = {}
+  private var onPositiveClickAction: () -> Unit = {}
 
   init {
+    viewToBlur = builder.viewToBlur
+    titleText = builder.titleText
+    negativeText = builder.negativeText
+    positiveText = builder.positiveText
+    onBackgroundClickAction = builder.onBackgroundClickAction
+    onNegativeClickAction = builder.onNegativeClickAction
+    onPositiveClickAction = builder.onPositiveClickAction
+
     alpha = ALPHA_TRANSPARENT
 
-    inflateLayout(context!!)
+    inflateLayout(context)
     fillContent()
     setClickListeners()
   }
@@ -106,55 +116,42 @@ class DialogPopupView(context: Context?,
     }
   }
 
-  @PuppyDslMarker class DialogPopupBuilder {
-    var context: Context? = null
+  class DialogPopupBuilder(val context: Context) {
     var viewToBlur: View? = null
+      private set
+
     var titleText: String = ""
+      private set
+
     var negativeText: String = ""
+      private set
+
     var positiveText: String = ""
+      private set
+
     var onBackgroundClickAction: () -> Unit = {}
+      private set
+
     var onNegativeClickAction: () -> Unit = {}
+      private set
+
     var onPositiveClickAction: () -> Unit = {}
+      private set
 
-    fun with(context: () -> Context) {
-      this.context = context()
-    }
+    fun viewToBlur(viewToBlur: View) = apply { this.viewToBlur = viewToBlur }
 
-    fun viewToBlur(viewToBlur: () -> View) {
-      this.viewToBlur = viewToBlur()
-    }
+    fun titleText(titleText: String) = apply { this.titleText = titleText }
 
-    fun titleText(title: () -> String) {
-      this.titleText = title()
-    }
+    fun negativeText(cancelText: String) = apply { this.negativeText = cancelText }
 
-    fun negativeText(negativeText: () -> String) {
-      this.negativeText = negativeText()
-    }
+    fun positiveText(deleteText: String) = apply { this.positiveText = deleteText }
 
-    fun positiveText(positiveText: () -> String) {
-      this.positiveText = positiveText()
-    }
+    fun onCancelClickAction(onCancelClickAction: () -> Unit) = apply { this.onNegativeClickAction = onCancelClickAction }
 
-    fun onNegativeClickAction(onNegativeClickAction: () -> () -> Unit) {
-      this.onNegativeClickAction = onNegativeClickAction()
-    }
+    fun onPositiveClickAction(onDeleteClickAction: () -> Unit) = apply { this.onPositiveClickAction = onDeleteClickAction }
 
-    fun onPositiveClickAction(onPositiveClickAction: () -> () -> Unit) {
-      this.onPositiveClickAction = onPositiveClickAction()
-    }
+    fun onBackgroundClickAction(onBackgroundClickAction: () -> Unit) = apply { this.onBackgroundClickAction = onBackgroundClickAction }
 
-    fun onBackgroundClickAction(onBackgroundClickAction: () -> () -> Unit) {
-      this.onBackgroundClickAction = onBackgroundClickAction()
-    }
-
-    fun build() = DialogPopupView(context,
-        viewToBlur,
-        titleText,
-        negativeText,
-        positiveText,
-        onBackgroundClickAction,
-        onNegativeClickAction,
-        onPositiveClickAction)
+    fun build(): DialogPopupView = DialogPopupView(context, this)
   }
 }

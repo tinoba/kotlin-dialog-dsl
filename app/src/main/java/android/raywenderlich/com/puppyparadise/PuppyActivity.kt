@@ -40,34 +40,14 @@ import kotlinx.android.synthetic.main.activity_puppy.*
 
 class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
 
-  private var puppies: List<Puppy> = puppyViewModel {
-    puppies {
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.samoyed
-      }
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.shiba
-      }
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.siberian_husky
-      }
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.akita
-      }
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.german_shepherd
-      }
-      puppy {
-        isLiked = false
-        imageResourceId = R.drawable.golden_retriever
-      }
-    }
-  }
+  private var puppies: List<Puppy> = listOf(
+      Puppy(false, R.drawable.samoyed),
+      Puppy(false, R.drawable.shiba),
+      Puppy(false, R.drawable.siberian_husky),
+      Puppy(false, R.drawable.akita),
+      Puppy(false, R.drawable.german_shepherd),
+      Puppy(false, R.drawable.golden_retriever))
+
 
   private val adapter by lazy { PuppyAdapter() }
 
@@ -94,17 +74,15 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
                                 backgroundClickAction: () -> Unit,
                                 positiveClickAction: () -> Unit,
                                 negativeClickAction: () -> Unit) =
-
-      dialogPopupView {
-        with { this@PuppyActivity }
-        viewToBlur { rootView }
-        titleText { titleText }
-        negativeText { negativeText }
-        positiveText { positiveText }
-        onPositiveClickAction { positiveClickAction }
-        onNegativeClickAction { negativeClickAction }
-        onBackgroundClickAction { backgroundClickAction }
-      }
+      DialogPopupView.builder(this)
+          .viewToBlur(rootView)
+          .titleText(titleText)
+          .negativeText(negativeText)
+          .positiveText(positiveText)
+          .onBackgroundClickAction(backgroundClickAction)
+          .onCancelClickAction(negativeClickAction)
+          .onPositiveClickAction(positiveClickAction)
+          .build()
 
   private fun showDialogPopup(position: Int) {
     createDialogPopup(getString(R.string.dialog_title),

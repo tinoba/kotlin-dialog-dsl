@@ -107,22 +107,15 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
         getString(R.string.dialog_negative_answer),
         getString(R.string.dialog_positive_answer),
         { removeDialogPopup() },
-        {
-          removeDialogPopup()
-          changeLikeStatus(true, position)
-          adapter.setData(puppies)
-        },
-        {
-          removeDialogPopup()
-          changeLikeStatus(false, position)
-          adapter.setData(puppies)
-        }).let {
+        { changeLikeStatus(true, position) },
+        { changeLikeStatus(false, position) }).let {
       dialogPopupView = it
       addDialogPopupViewWithBlurToRoot(it)
     }
   }
 
   private fun changeLikeStatus(isLiked: Boolean, position: Int) {
+    removeDialogPopup()
     puppies = puppies.mapIndexed { index, puppy ->
       if (index == position) {
         Puppy(isLiked, puppy.imageResource)
@@ -130,6 +123,7 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
         puppy
       }
     }
+    adapter.setData(puppies)
   }
 
   private fun addDialogPopupViewWithBlurToRoot(dialogPopupView: DialogPopupView) {

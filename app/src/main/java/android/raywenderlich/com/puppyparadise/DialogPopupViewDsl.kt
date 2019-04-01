@@ -32,3 +32,4 @@ package android.raywenderlich.com.puppyparadise
 
 fun dialogPopupView(lambda: DialogPopupView.DialogPopupBuilder.() -> Unit) =
     DialogPopupView.DialogPopupBuilder().apply(lambda).build()
+

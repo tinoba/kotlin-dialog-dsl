@@ -94,16 +94,12 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
                                 backgroundClickAction: () -> Unit,
                                 positiveClickAction: () -> Unit,
                                 negativeClickAction: () -> Unit) =
-
-      dialogPopupView {
-        with { this@PuppyActivity }
-        viewToBlur { rootView }
-        titleText { titleText }
-        negativeText { negativeText }
-        positiveText { positiveText }
-        onPositiveClickAction { positiveClickAction }
-        onNegativeClickAction { negativeClickAction }
-        onBackgroundClickAction { backgroundClickAction }
+      buildDialog(this) {
+        viewToBlur(rootView)
+        title(titleText)
+        positiveAction(positiveText) { positiveClickAction }
+        negativeAction(negativeText) { negativeClickAction }
+        backgroundAction { backgroundClickAction }
       }
 
   private fun showDialogPopup(position: Int) {
@@ -113,18 +109,26 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
         { removeDialogPopup() },
         {
           removeDialogPopup()
-          puppies = puppies.mapIndexed { index, puppy ->
-            if (index == position) {
-              Puppy(true, puppy.imageResource)
-            } else {
-              puppy
-            }
-          }
+          changeLikeStatus(true, position)
           adapter.setData(puppies)
         },
-        { removeDialogPopup() }).let {
+        {
+          removeDialogPopup()
+          changeLikeStatus(false, position)
+          adapter.setData(puppies)
+        }).let {
       dialogPopupView = it
       addDialogPopupViewWithBlurToRoot(it)
+    }
+  }
+
+  private fun changeLikeStatus(isLiked: Boolean, position: Int) {
+    puppies = puppies.mapIndexed { index, puppy ->
+      if (index == position) {
+        Puppy(isLiked, puppy.imageResource)
+      } else {
+        puppy
+      }
     }
   }
 

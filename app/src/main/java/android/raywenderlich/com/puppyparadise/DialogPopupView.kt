@@ -116,35 +116,35 @@ class DialogPopupView(context: Context?,
     var onNegativeClickAction: () -> Unit = {}
     var onPositiveClickAction: () -> Unit = {}
 
-    fun with(context: () -> Context) {
+    inline fun with(context: () -> Context) {
       this.context = context()
     }
 
-    fun viewToBlur(viewToBlur: () -> View) {
+    inline fun viewToBlur(viewToBlur: () -> View) {
       this.viewToBlur = viewToBlur()
     }
 
-    fun titleText(title: () -> String) {
+    inline fun titleText(title: () -> String) {
       this.titleText = title()
     }
 
-    fun negativeText(negativeText: () -> String) {
+    inline fun negativeText(negativeText: () -> String) {
       this.negativeText = negativeText()
     }
 
-    fun positiveText(positiveText: () -> String) {
+    inline fun positiveText(positiveText: () -> String) {
       this.positiveText = positiveText()
     }
 
-    fun onNegativeClickAction(onNegativeClickAction: () -> () -> Unit) {
+    inline fun onNegativeClickAction(onNegativeClickAction: () -> () -> Unit) {
       this.onNegativeClickAction = onNegativeClickAction()
     }
 
-    fun onPositiveClickAction(onPositiveClickAction: () -> () -> Unit) {
+    inline fun onPositiveClickAction(onPositiveClickAction: () -> () -> Unit) {
       this.onPositiveClickAction = onPositiveClickAction()
     }
 
-    fun onBackgroundClickAction(onBackgroundClickAction: () -> () -> Unit) {
+    inline fun onBackgroundClickAction(onBackgroundClickAction: () -> () -> Unit) {
       this.onBackgroundClickAction = onBackgroundClickAction()
     }
 

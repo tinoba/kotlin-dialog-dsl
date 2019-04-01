@@ -89,21 +89,23 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
         getString(R.string.dialog_negative_answer),
         getString(R.string.dialog_positive_answer),
         { removeDialogPopup() },
-        {
-          removeDialogPopup()
-          puppies = puppies.mapIndexed { index, puppy ->
-            if (index == position) {
-              Puppy(true, puppy.imageResource)
-            } else {
-              puppy
-            }
-          }
-          adapter.setData(puppies)
-        },
-        { removeDialogPopup() }).let {
+        { changeLikeStatus(true, position) },
+        { changeLikeStatus(false, position) }).let {
       dialogPopupView = it
       addDialogPopupViewWithBlurToRoot(it)
     }
+  }
+
+  private fun changeLikeStatus(isLiked: Boolean, position: Int) {
+    removeDialogPopup()
+    puppies = puppies.mapIndexed { index, puppy ->
+      if (index == position) {
+        Puppy(isLiked, puppy.imageResource)
+      } else {
+        puppy
+      }
+    }
+    adapter.setData(puppies)
   }
 
   private fun addDialogPopupViewWithBlurToRoot(dialogPopupView: DialogPopupView) {

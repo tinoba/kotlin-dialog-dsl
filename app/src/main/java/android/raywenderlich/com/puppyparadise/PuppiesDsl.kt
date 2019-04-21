@@ -34,8 +34,8 @@ package android.raywenderlich.com.puppyparadise
 
   private val puppies = mutableListOf<Puppy>()
 
-  fun puppies(block: Puppies.() -> Unit) {
-    puppies.addAll(Puppies().apply(block))
+  fun puppies(puppiesList: Puppies.() -> Unit) {
+    puppies.addAll(Puppies().apply(puppiesList))
   }
 
   fun build(): ArrayList<Puppy> = ArrayList(puppies)
@@ -43,8 +43,8 @@ package android.raywenderlich.com.puppyparadise
 
 @PuppyDslMarker class Puppies : ArrayList<Puppy>() {
 
-  fun puppy(puppyImage: PuppyBuilder.() -> Unit) {
-    add(PuppyBuilder().apply(puppyImage).build())
+  fun puppy(puppyBuilder: PuppyBuilder.() -> Unit) {
+    add(PuppyBuilder().apply(puppyBuilder).build())
   }
 }
 
@@ -56,6 +56,7 @@ package android.raywenderlich.com.puppyparadise
   fun build(): Puppy = Puppy(isLiked, imageResourceId)
 }
 
-fun puppyViewModel(puppies: PuppyViewModelBuilder.() -> Unit): ArrayList<Puppy> = PuppyViewModelBuilder().apply(puppies).build()
+fun puppyViewModel(puppies: PuppyViewModelBuilder.() -> Unit): ArrayList<Puppy> =
+  PuppyViewModelBuilder().apply(puppies).build()
 
 @DslMarker annotation class PuppyDslMarker

@@ -19,12 +19,14 @@ fun DialogPopupView.DialogPopupBuilder.viewToBlur(viewToBlur: View) {
   this.viewToBlur = viewToBlur
 }
 
-fun DialogPopupView.DialogPopupBuilder.negativeAction(negativeText: String, onNegativeClickAction: () -> () -> Unit) {
+fun DialogPopupView.DialogPopupBuilder.negativeAction(negativeText: String,
+                                                      onNegativeClickAction: () -> () -> Unit) {
   this.onNegativeClickAction = onNegativeClickAction()
   this.negativeText = negativeText
 }
 
-fun DialogPopupView.DialogPopupBuilder.positiveAction(positiveText: String, onPositiveClickAction: () -> () -> Unit) {
+fun DialogPopupView.DialogPopupBuilder.positiveAction(positiveText: String,
+                                                      onPositiveClickAction: () -> () -> Unit) {
   this.onPositiveClickAction = onPositiveClickAction()
   this.positiveText = positiveText
 }

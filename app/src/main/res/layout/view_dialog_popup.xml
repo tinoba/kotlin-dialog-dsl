@@ -36,7 +36,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <android.raywenderlich.com.puppyparadise.ObservableImageView
+  <android.raywenderlich.com.puppyparadise.LoadedStateImageView
     android:id="@+id/blurryBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

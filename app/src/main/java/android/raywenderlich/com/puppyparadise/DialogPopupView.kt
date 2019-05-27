@@ -32,28 +32,21 @@ package android.raywenderlich.com.puppyparadise
 
 import android.content.Context
 import android.support.annotation.LayoutRes
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.view_dialog_popup.view.*
 
-class DialogPopupView(context: Context?,
-                      private val viewToBlur: View?,
-                      private val titleText: String,
-                      private val negativeText: String,
-                      private val positiveText: String,
-                      private val onBackgroundClickAction: () -> Unit,
-                      private val onNegativeClickAction: () -> Unit,
-                      private val onPositiveClickAction: () -> Unit
-) : FrameLayout(context!!) {
+class DialogPopupView : FrameLayout {
 
   companion object {
 
     const val FADING_ANIMATION_DURATION = 200L
 
     const val ALPHA_TRANSPARENT = 0.0f
-    const val ALPHA_OPAQUE = 1.0f
+    private const val ALPHA_OPAQUE = 1.0f
 
     private const val DEFAULT_BLUR_RADIUS = 12
     private const val DEFAULT_BLUR_DOWNSCALE = 3
@@ -65,7 +58,35 @@ class DialogPopupView(context: Context?,
   private var blurRadius = DEFAULT_BLUR_RADIUS
   private var blurDownscaleRadius = DEFAULT_BLUR_DOWNSCALE
 
-  init {
+  private var viewToBlur: View? = null
+  private var titleText: String = ""
+  private var negativeText: String = ""
+  private var positiveText: String = ""
+  private var onBackgroundClickAction: () -> Unit = {}
+  private var onNegativeClickAction: () -> Unit = {}
+  private var onPositiveClickAction: () -> Unit = {}
+
+  constructor(context: Context, builder: DialogPopupBuilder) : super(context, null) {
+    viewToBlur = builder.viewToBlur
+    titleText = builder.titleText
+    negativeText = builder.negativeText
+    positiveText = builder.positiveText
+    onBackgroundClickAction = builder.onBackgroundClickAction
+    onNegativeClickAction = builder.onNegativeClickAction
+    onPositiveClickAction = builder.onPositiveClickAction
+
+    init()
+  }
+
+  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs, 0) {
+    init()
+  }
+
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    init()
+  }
+
+  private fun init() {
     alpha = ALPHA_TRANSPARENT
 
     inflateLayout(context!!)
@@ -106,7 +127,8 @@ class DialogPopupView(context: Context?,
     }
   }
 
-  @PuppyDslMarker class DialogPopupBuilder {
+  @PuppyDslMarker
+  class DialogPopupBuilder {
     var context: Context? = null
     var viewToBlur: View? = null
     var titleText: String = ""
@@ -148,13 +170,6 @@ class DialogPopupView(context: Context?,
       this.onBackgroundClickAction = onBackgroundClickAction()
     }
 
-    fun build() = DialogPopupView(context,
-        viewToBlur,
-        titleText,
-        negativeText,
-        positiveText,
-        onBackgroundClickAction,
-        onNegativeClickAction,
-        onPositiveClickAction)
+    fun build() = DialogPopupView(context!!, this)
   }
 }

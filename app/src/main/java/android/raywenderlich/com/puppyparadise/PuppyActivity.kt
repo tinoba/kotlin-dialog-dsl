@@ -140,7 +140,6 @@ class PuppyActivity : AppCompatActivity(), PuppyAdapter.ItemClickListener {
             rootView.removeView(it)
           }
           .start()
-      dialogPopupView = null
     }
   }
 

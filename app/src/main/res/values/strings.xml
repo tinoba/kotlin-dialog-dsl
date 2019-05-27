@@ -3,4 +3,6 @@
   <string name="dialog_title">Do you like this puppy?</string>
   <string name="dialog_negative_answer">NO</string>
   <string name="dialog_positive_answer">YES</string>
+  <string name="puppy_image_content_descriptor">Puppy image</string>
+  <string name="like_icon_content_descriptor">Like icon</string>
 </resources>

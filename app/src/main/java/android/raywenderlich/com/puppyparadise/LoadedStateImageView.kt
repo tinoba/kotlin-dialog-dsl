@@ -35,7 +35,7 @@ import android.graphics.drawable.Drawable
 import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
 
-class ObservableImageView : AppCompatImageView {
+class LoadedStateImageView : AppCompatImageView {
 
   constructor(context: Context?) : super(context)
   constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)

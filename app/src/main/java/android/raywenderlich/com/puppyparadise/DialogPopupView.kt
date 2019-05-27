@@ -129,7 +129,7 @@ class DialogPopupView : FrameLayout {
     }
   }
 
-  class DialogPopupBuilder(val context: Context) {
+  class DialogPopupBuilder(private val context: Context) {
     var viewToBlur: View? = null
       private set
 
